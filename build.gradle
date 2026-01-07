@@ -1,0 +1,154 @@
+plugins {
+  id 'groovy'
+  id('java-library')
+  id('signing')
+  id('maven-publish')
+  id("se.alipsa.nexus-release-plugin") version '2.0.0'
+}
+group = 'se.alipsa.groovy'
+version = '0.1.0-SNAPSHOT' // remember to change Extension module info if changing version
+description = "Groovy extensions for Junit 5"
+
+repositories {
+  if (version.contains('SNAPSHOT')) {
+    mavenLocal()
+  }
+  mavenCentral()
+}
+
+JavaCompile javaCompile = compileJava {
+  options.release = 17
+  options.deprecation = true
+  options.compilerArgs << "-Xlint:unchecked"
+}
+
+compileGroovy {
+  options.deprecation = true
+}
+
+dependencies {
+  def groovyVersion="5.0.3"
+  def junitVersion = '6.0.1'
+  compileOnly "org.apache.groovy:groovy:$groovyVersion"
+  compileOnly "org.apache.groovy:groovy-ant:$groovyVersion"
+  compileOnly "org.apache.groovy:groovy-groovydoc:$groovyVersion"
+  compileOnly "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+  testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+  testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+  testRuntimeOnly "org.junit.platform:junit-platform-launcher:$junitVersion"
+  testImplementation "org.apache.groovy:groovy:$groovyVersion"
+}
+
+test {
+  useJUnitPlatform()
+}
+
+tasks.register('antGroovydoc', DefaultTask) {
+  group = 'documentation'
+  description = 'Generate Groovydoc using Ant with custom config'
+
+  def outputDir = layout.buildDirectory.dir("groovydocant")
+  def groovySrcDirs = sourceSets.main.groovy.srcDirs
+  def compileClasspath = sourceSets.main.compileClasspath
+  def docTitle = "${project.name} ${project.version}"
+  def windowTitle = "${project.name} ${project.version}"
+
+  outputs.dir(outputDir)
+
+  doLast {
+    def outputDirFile = outputDir.get().asFile
+
+    ant.taskdef(
+        name: 'groovydoc',
+        classname: 'org.codehaus.groovy.ant.Groovydoc',
+        classpath: compileClasspath.asPath
+    )
+
+    ant.groovydoc(
+        destdir: outputDirFile,
+        sourcepath: groovySrcDirs.join(':'),
+        packagenames: '*',
+        javaVersion: 'JAVA_17',
+        doctitle: docTitle,
+        windowtitle: windowTitle
+    ) {
+      // Does not work, groovydoc does not support modules e,g,
+      //  URL will become https://docs.oracle.com/en/java/javase/21/docs/api/java/net/URL.html
+      //  instead of https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/URL.html
+      //link packages: 'java.', href: 'https://docs.oracle.com/en/java/javase/21/docs/api/'
+      link packages:"groovy.,org.codehaus.groovy.", href: "http://docs.groovy-lang.org/latest/html/api/"
+    }
+  }
+}
+
+tasks.register('javadocJar', Jar) {
+  dependsOn tasks.named('antGroovydoc')
+  archiveClassifier.set('javadoc')
+  from layout.buildDirectory.dir("groovydocant")
+}
+
+tasks.register('sourcesJar', Jar) {
+  dependsOn tasks.named('classes')
+  archiveClassifier.set('sources')
+  from sourceSets.main.allSource
+}
+
+publishing {
+  publications {
+    maven(MavenPublication) {
+      from components.java
+      artifact(javadocJar)
+      artifact(sourcesJar)
+      pom {
+        name = 'Matrix Groovy Extensions'
+        description = "${project.description}"
+        url = "https://github.com/Alipsa/groovier-junit5"
+        properties = [
+            'maven.compiler.release': "${javaCompile.options.release.get()}"
+        ]
+        licenses {
+          license {
+            name = 'MIT License'
+            url = 'https://raw.githubusercontent.com/Alipsa/groovier-junit5/master/LICENSE'
+          }
+        }
+        developers {
+          developer {
+            id = 'perNyfelt'
+            name = 'Per Nyfelt'
+          }
+        }
+        scm {
+          url = 'https://github.com/Alipsa/groovier-junit5/tree/master'
+          connection = 'scm:git:https://github.com/Alipsa/groovier-junit5.git'
+          developerConnection = 'scm:git:https://github.com/Alipsa/groovier-junit5.git'
+        }
+      }
+    }
+  }
+  if (project.ext.properties.sonatypeUsername) {
+    repositories {
+      maven {
+        credentials {
+          username = sonatypeUsername
+          password = sonatypePassword
+        }
+      }
+    }
+  }
+}
+
+signing {
+  if (project.properties['signing.keyId'] != null) {
+    //project.logger.lifecycle("Signing artifacts...")
+    sign publishing.publications.maven
+  } else {
+    project.logger.debug("signing.keyId is not defined, skipping signing of artifacts...")
+  }
+}
+
+nexusReleasePlugin {
+  userName = project.ext.properties.sonatypeUsername
+  password = project.ext.properties.sonatypePassword
+  mavenPublication = publishing.publications.maven
+}
