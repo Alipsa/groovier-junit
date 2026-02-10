@@ -79,6 +79,74 @@ class MyTest {
 }
 ```
 
+## Optional: Groovy-Friendly Test ClassLoader (Opt-In)
+
+The assertion extensions work with zero extra setup.
+
+If you also want Groovy-friendly classloader behavior for JUnit Platform launching (for example when using `@Grab`/`Grape` at runtime), enable the optional launcher interceptor.
+
+### System properties
+
+- `groovier.junit5.classloader.enabled` (default: `false`)
+- `groovier.junit5.classloader.mode` (optional: `context` or `root`, default: `context`)
+- `groovier.junit5.classloader.debug` (optional: `true` to print debug logs)
+
+### Gradle (JUnit Platform)
+
+```groovy
+test {
+  useJUnitPlatform()
+
+  // Enable JUnit launcher interceptor auto-detection
+  systemProperty 'junit.platform.launcher.interceptors.enabled', 'true'
+
+  // Opt in to groovier-junit5 classloader support
+  systemProperty 'groovier.junit5.classloader.enabled', 'true'
+  systemProperty 'groovier.junit5.classloader.mode', 'context'
+}
+```
+
+For `@GrabConfig(systemClassLoader=true)`, the JVM must start with `RootLoader` as system classloader:
+
+```groovy
+test {
+  useJUnitPlatform()
+  systemProperty 'junit.platform.launcher.interceptors.enabled', 'true'
+  systemProperty 'groovier.junit5.classloader.enabled', 'true'
+  systemProperty 'groovier.junit5.classloader.mode', 'root'
+  jvmArgs '-Djava.system.class.loader=org.codehaus.groovy.tools.RootLoader'
+}
+```
+
+### Maven (Surefire/Failsafe)
+
+```xml
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-surefire-plugin</artifactId>
+  <version>3.5.4</version>
+  <configuration>
+    <systemPropertyVariables>
+      <junit.platform.launcher.interceptors.enabled>true</junit.platform.launcher.interceptors.enabled>
+      <groovier.junit5.classloader.enabled>true</groovier.junit5.classloader.enabled>
+      <groovier.junit5.classloader.mode>context</groovier.junit5.classloader.mode>
+    </systemPropertyVariables>
+  </configuration>
+</plugin>
+```
+
+For `@GrabConfig(systemClassLoader=true)`, add:
+
+```xml
+<argLine>-Djava.system.class.loader=org.codehaus.groovy.tools.RootLoader</argLine>
+```
+
+### Notes
+
+- This feature is opt-in and does not affect users who only want assertion extensions.
+- The interceptor can switch context classloader during launcher operations.
+- It cannot retroactively replace the JVM system classloader after startup.
+
 ### How It Works
 
 The extension uses Groovy's Extension Module mechanism to add static methods to JUnit's `Assertions` class. When you call `Assertions.assertEquals()` with BigDecimal arguments, Groovy automatically dispatches to the enhanced version that uses `compareTo()` for comparison.
