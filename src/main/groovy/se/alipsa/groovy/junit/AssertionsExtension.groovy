@@ -76,4 +76,36 @@ class AssertionsExtension {
     // Delegate to the method above
     assertEquals(self, expected as BigDecimal, actual, message)
   }
+
+  /**
+   * Asserts that a {@link Number} and a {@link BigDecimal} are numerically equal within a given delta, ignoring scale differences.
+   *
+   * @param self the {@link Assertions} class (implicit parameter for Groovy extension methods)
+   * @param expected the expected {@link Number} value
+   * @param actual the actual {@link BigDecimal} value
+   * @param delta the maximum allowed difference between the expected and actual values for them to be considered equal
+   * @throws org.opentest4j.AssertionFailedError if the values are not numerically equal
+   * @see #assertEquals(Assertions, BigDecimal, BigDecimal, String)
+   */
+  static void assertEquals(Assertions self, Number expected, BigDecimal actual, BigDecimal delta) {
+    assertEquals(self, expected, actual, delta, "Expected ${expected} but was ${actual} with delta ${delta}")
+  }
+
+  /**
+   * Asserts that a {@link Number} and a {@link BigDecimal} are numerically equal within a given delta, ignoring scale differences.
+   *
+   * @param self the {@link Assertions} class (implicit parameter for Groovy extension methods)
+   * @param expected the expected {@link Number} value
+   * @param actual the actual {@link BigDecimal} value
+   * @param delta the maximum allowed difference between the expected and actual values for them to be considered equal
+   * @param message optional custom failure message
+   * @throws org.opentest4j.AssertionFailedError if the values are not numerically equal
+   * @see #assertEquals(Assertions, BigDecimal, BigDecimal, String)
+   */
+  static void assertEquals(Assertions self, Number expected, BigDecimal actual, BigDecimal delta, String message) {
+    if (expected == null && actual == null) {
+      return
+    }
+    Assertions.assertTrue((expected - actual).abs() <= delta, message)
+  }
 }
