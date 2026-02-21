@@ -1,4 +1,4 @@
-package test.alipsa.groovy.junit5
+package test.alipsa.groovy.junit
 
 import org.codehaus.groovy.tools.RootLoader
 import org.junit.jupiter.api.Assertions
@@ -11,7 +11,7 @@ import org.junit.platform.launcher.LauncherExecutionRequest
 import org.junit.platform.launcher.LauncherInterceptor
 import org.junit.platform.launcher.TestExecutionListener
 import org.junit.platform.launcher.TestPlan
-import se.alipsa.groovy.junit5.GroovyClassLoaderLauncherInterceptor
+import se.alipsa.groovy.junit.GroovyClassLoaderLauncherInterceptor
 
 class GroovyClassLoaderLauncherInterceptorTest {
 

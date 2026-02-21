@@ -8,7 +8,7 @@ plugins {
 }
 group = 'se.alipsa.groovy'
 version = '0.1.0-SNAPSHOT' // remember to change Extension module info if changing version
-description = "Groovy extensions for Junit 5"
+description = "Groovy extensions for Junit 5+"
 
 repositories {
   if (version.contains('SNAPSHOT')) {
@@ -29,7 +29,7 @@ compileGroovy {
 
 dependencies {
   def groovyVersion="5.0.4"
-  def junitVersion = '6.0.2'
+  def junitVersion = '6.0.3'
   compileOnly "org.apache.groovy:groovy:$groovyVersion"
   compileOnly "org.apache.groovy:groovy-ant:$groovyVersion"
   compileOnly "org.apache.groovy:groovy-groovydoc:$groovyVersion"

@@ -1,4 +1,4 @@
-package test.alipsa.groovy.junit5
+package test.alipsa.groovy.junit
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test

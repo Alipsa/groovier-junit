@@ -1,3 +1,3 @@
 moduleName=groovy-junit5-ext
 moduleVersion=0.1.0
-staticExtensionClasses=se.alipsa.groovy.junit5.AssertionsExtension
+staticExtensionClasses=se.alipsa.groovy.junit.AssertionsExtension

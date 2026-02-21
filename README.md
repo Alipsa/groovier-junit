@@ -1,10 +1,10 @@
-# groovier-junit5
+# groovier-junit
 
-A Groovy Extension Module that makes JUnit 5 assertions more Groovy-friendly by adding improved BigDecimal comparison support.
+A Groovy Extension Module that makes JUnit 5 and 6 assertions more Groovy-friendly by adding improved BigDecimal comparison support.
 
 ## Overview
 
-This library extends JUnit 5's `Assertions` class with BigDecimal-aware assertion methods that use numerical comparison instead of strict equality. This solves the common problem where `new BigDecimal("5.0")` and `new BigDecimal("5.00")` are not considered equal by the standard `assertEquals` method, even though they represent the same numerical value.
+This library extends JUnit's `Assertions` class with BigDecimal-aware assertion methods that use numerical comparison instead of strict equality. This solves the common problem where `new BigDecimal("5.0")` and `new BigDecimal("5.00")` are not considered equal by the standard `assertEquals` method, even though they represent the same numerical value.
 
 ## Features
 
@@ -21,7 +21,7 @@ Add the following dependency to your `build.gradle`:
 
 ```groovy
 dependencies {
-    testImplementation 'se.alipsa.groovy:groovier-junit5:0.1.0'
+    testImplementation 'se.alipsa.groovy:groovier-junit:0.1.0'
 }
 ```
 
@@ -29,7 +29,7 @@ For Kotlin DSL (`build.gradle.kts`):
 
 ```kotlin
 dependencies {
-    testImplementation("se.alipsa.groovy:groovier-junit5:0.1.0")
+    testImplementation("se.alipsa.groovy:groovier-junit:0.1.0")
 }
 ```
 
@@ -40,7 +40,7 @@ Add the following dependency to your `pom.xml`:
 ```xml
 <dependency>
     <groupId>se.alipsa.groovy</groupId>
-    <artifactId>groovier-junit5</artifactId>
+    <artifactId>groovier-junit</artifactId>
     <version>0.1.0</version>
     <scope>test</scope>
 </dependency>
@@ -87,9 +87,9 @@ If you also want Groovy-friendly classloader behavior for JUnit Platform launchi
 
 ### System properties
 
-- `groovier.junit5.classloader.enabled` (default: `false`)
-- `groovier.junit5.classloader.mode` (optional: `context` or `root`, default: `context`)
-- `groovier.junit5.classloader.debug` (optional: `true` to print debug logs)
+- `groovier.junit.classloader.enabled` (default: `false`)
+- `groovier.junit.classloader.mode` (optional: `context` or `root`, default: `context`)
+- `groovier.junit.classloader.debug` (optional: `true` to print debug logs)
 
 ### Gradle (JUnit Platform)
 
@@ -100,9 +100,9 @@ test {
   // Enable JUnit launcher interceptor auto-detection
   systemProperty 'junit.platform.launcher.interceptors.enabled', 'true'
 
-  // Opt in to groovier-junit5 classloader support
-  systemProperty 'groovier.junit5.classloader.enabled', 'true'
-  systemProperty 'groovier.junit5.classloader.mode', 'context'
+  // Opt in to groovier-junit classloader support
+  systemProperty 'groovier.junit.classloader.enabled', 'true'
+  systemProperty 'groovier.junit.classloader.mode', 'context'
 }
 ```
 
@@ -112,8 +112,8 @@ For `@GrabConfig(systemClassLoader=true)`, the JVM must start with `RootLoader` 
 test {
   useJUnitPlatform()
   systemProperty 'junit.platform.launcher.interceptors.enabled', 'true'
-  systemProperty 'groovier.junit5.classloader.enabled', 'true'
-  systemProperty 'groovier.junit5.classloader.mode', 'root'
+  systemProperty 'groovier.junit.classloader.enabled', 'true'
+  systemProperty 'groovier.junit.classloader.mode', 'root'
   jvmArgs '-Djava.system.class.loader=org.codehaus.groovy.tools.RootLoader'
 }
 ```
@@ -128,8 +128,8 @@ test {
   <configuration>
     <systemPropertyVariables>
       <junit.platform.launcher.interceptors.enabled>true</junit.platform.launcher.interceptors.enabled>
-      <groovier.junit5.classloader.enabled>true</groovier.junit5.classloader.enabled>
-      <groovier.junit5.classloader.mode>context</groovier.junit5.classloader.mode>
+      <groovier.junit.classloader.enabled>true</groovier.junit.classloader.enabled>
+      <groovier.junit.classloader.mode>context</groovier.junit.classloader.mode>
     </systemPropertyVariables>
   </configuration>
 </plugin>
@@ -156,7 +156,7 @@ The extension uses Groovy's Extension Module mechanism to add static methods to 
 assertEquals(new BigDecimal("5.0"), new BigDecimal("5.00"))  // FAILS - different scale
 ```
 
-**With groovier-junit5:**
+**With groovier-junit:**
 ```groovy
 assertEquals(new BigDecimal("5.0"), new BigDecimal("5.00"))  // PASSES - numerical equality
 ```
@@ -170,8 +170,8 @@ assertEquals(new BigDecimal("5.0"), new BigDecimal("5.00"))  // PASSES - numeric
 ## Building from Source
 
 ```bash
-git clone https://github.com/Alipsa/groovier-junit5.git
-cd groovier-junit5
+git clone https://github.com/Alipsa/groovier-junit.git
+cd groovier-junit
 ./gradlew build
 ```
 
@@ -199,5 +199,5 @@ Per Nyfelt
 
 ## Links
 
-- [GitHub Repository](https://github.com/Alipsa/groovier-junit5)
-- [Issue Tracker](https://github.com/Alipsa/groovier-junit5/issues)
+- [GitHub Repository](https://github.com/Alipsa/groovier-junit)
+- [Issue Tracker](https://github.com/Alipsa/groovier-junit/issues)

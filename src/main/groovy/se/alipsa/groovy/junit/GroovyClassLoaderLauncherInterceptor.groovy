@@ -1,4 +1,4 @@
-package se.alipsa.groovy.junit5
+package se.alipsa.groovy.junit
 
 import org.junit.platform.launcher.Launcher
 import org.junit.platform.launcher.LauncherDiscoveryListener
@@ -7,8 +7,6 @@ import org.junit.platform.launcher.LauncherExecutionRequest
 import org.junit.platform.launcher.LauncherInterceptor
 import org.junit.platform.launcher.TestExecutionListener
 import org.junit.platform.launcher.TestPlan
-
-import java.util.Locale
 
 /**
  * Optional JUnit Platform launcher interceptor that switches the thread context classloader
