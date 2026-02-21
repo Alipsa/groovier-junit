@@ -33,6 +33,7 @@ dependencies {
   compileOnly "org.apache.groovy:groovy:$groovyVersion"
   compileOnly "org.apache.groovy:groovy-ant:$groovyVersion"
   compileOnly "org.apache.groovy:groovy-groovydoc:$groovyVersion"
+  compileOnly "org.apache.groovy:groovy-templates:$groovyVersion"
   compileOnly "org.junit.jupiter:junit-jupiter-api:$junitVersion"
   compileOnly "org.junit.platform:junit-platform-launcher:$junitVersion"
   testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
