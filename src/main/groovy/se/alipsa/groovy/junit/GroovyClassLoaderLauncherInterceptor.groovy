@@ -13,13 +13,13 @@ import org.junit.platform.launcher.TestPlan
  * during launcher operations to a Groovy-friendly classloader.
  *
  * <p>The interceptor is disabled by default and must be enabled explicitly with:
- * {@code -Dgroovier.junit5.classloader.enabled=true}.</p>
+ * {@code -Dgroovier.junit.classloader.enabled=true}.</p>
  */
 class GroovyClassLoaderLauncherInterceptor implements LauncherInterceptor {
 
-  static final String ENABLE_PROPERTY = 'groovier.junit5.classloader.enabled'
-  static final String MODE_PROPERTY = 'groovier.junit5.classloader.mode'
-  static final String DEBUG_PROPERTY = 'groovier.junit5.classloader.debug'
+  static final String ENABLE_PROPERTY = 'groovier.junit.classloader.enabled'
+  static final String MODE_PROPERTY = 'groovier.junit.classloader.mode'
+  static final String DEBUG_PROPERTY = 'groovier.junit.classloader.debug'
   static final String MODE_CONTEXT = 'context'
   static final String MODE_ROOT = 'root'
 
@@ -127,7 +127,7 @@ class GroovyClassLoaderLauncherInterceptor implements LauncherInterceptor {
 
   private void debug(String message) {
     if (Boolean.parseBoolean(System.getProperty(DEBUG_PROPERTY, 'false'))) {
-      System.err.println("[groovier-junit5] ${message}")
+      System.err.println("[groovier-junit] ${message}")
     }
   }
 

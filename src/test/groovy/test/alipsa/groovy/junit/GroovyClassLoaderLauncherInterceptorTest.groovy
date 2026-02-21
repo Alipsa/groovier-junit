@@ -124,7 +124,7 @@ class GroovyClassLoaderLauncherInterceptorTest {
 
     Assertions.assertNotNull(serviceUrl)
     String content = serviceUrl.text
-    Assertions.assertTrue(content.contains('se.alipsa.groovy.junit5.GroovyClassLoaderLauncherInterceptor'))
+    Assertions.assertTrue(content.contains('se.alipsa.groovy.junit.GroovyClassLoaderLauncherInterceptor'))
   }
 
   private static Map<String, String> captureProperties() {

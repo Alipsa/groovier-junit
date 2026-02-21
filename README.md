@@ -165,7 +165,7 @@ assertEquals(new BigDecimal("5.0"), new BigDecimal("5.00"))  // PASSES - numeric
 
 - **Java**: 17 or higher
 - **Groovy**: any 4.x or 5.x version should work
-- **JUnit 5**: any 6.x version should work (probably earlier versions too)
+- **JUnit**: any 6.x version should work (probably earlier versions too)
 
 ## Building from Source
 

@@ -7,7 +7,7 @@ plugins {
   id("com.github.ben-manes.versions").version("0.53.0")
 }
 group = 'se.alipsa.groovy'
-version = '0.1.0-SNAPSHOT' // remember to change Extension module info if changing version
+version = '0.1.0' // remember to change Extension module info if changing version
 description = "Groovy extensions for Junit 5+"
 
 repositories {
@@ -105,14 +105,14 @@ publishing {
       pom {
         name = 'Matrix Groovy Extensions'
         description = "${project.description}"
-        url = "https://github.com/Alipsa/groovier-junit5"
+        url = "https://github.com/Alipsa/groovier-junit"
         properties = [
             'maven.compiler.release': "${javaCompile.options.release.get()}"
         ]
         licenses {
           license {
             name = 'MIT License'
-            url = 'https://raw.githubusercontent.com/Alipsa/groovier-junit5/master/LICENSE'
+            url = 'https://raw.githubusercontent.com/Alipsa/groovier-junit/master/LICENSE'
           }
         }
         developers {
@@ -122,9 +122,9 @@ publishing {
           }
         }
         scm {
-          url = 'https://github.com/Alipsa/groovier-junit5/tree/master'
-          connection = 'scm:git:https://github.com/Alipsa/groovier-junit5.git'
-          developerConnection = 'scm:git:https://github.com/Alipsa/groovier-junit5.git'
+          url = 'https://github.com/Alipsa/groovier-junit/tree/master'
+          connection = 'scm:git:https://github.com/Alipsa/groovier-junit.git'
+          developerConnection = 'scm:git:https://github.com/Alipsa/groovier-junit.git'
         }
       }
     }
