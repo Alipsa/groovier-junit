@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 set -e
 if [[ -f  ~/.sdkman/bin/sdkman-init.sh ]]; then
   source ~/.sdkman/bin/sdkman-init.sh
@@ -6,7 +6,8 @@ fi
 if command -v jdk17 >/dev/null 2>&1; then
   source jdk17
 fi
-version=$(java -version 2>&1 >/dev/null | grep 'version' | awk '{print $3}')
+export PATH="${JAVA_HOME}/bin:${PATH}"
+version=$(java -version 2>&1 | grep 'version' | awk '{print $3}')
 if [[ ! $version == *17.* ]]; then
   echo "Java version 17 required to release but was $version"
   exit 1
