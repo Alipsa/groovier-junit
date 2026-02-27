@@ -21,7 +21,7 @@ Add the following dependency to your `build.gradle`:
 
 ```groovy
 dependencies {
-    testImplementation 'se.alipsa.groovy:groovier-junit:0.1.0'
+    testImplementation 'se.alipsa.groovy:groovier-junit:0.2.0'
 }
 ```
 
@@ -29,7 +29,7 @@ For Kotlin DSL (`build.gradle.kts`):
 
 ```kotlin
 dependencies {
-    testImplementation("se.alipsa.groovy:groovier-junit:0.1.0")
+    testImplementation("se.alipsa.groovy:groovier-junit:0.2.0")
 }
 ```
 
@@ -41,7 +41,7 @@ Add the following dependency to your `pom.xml`:
 <dependency>
     <groupId>se.alipsa.groovy</groupId>
     <artifactId>groovier-junit</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <scope>test</scope>
 </dependency>
 ```
