@@ -104,7 +104,7 @@ publishing {
       artifact(javadocJar)
       artifact(sourcesJar)
       pom {
-        name = 'Matrix Groovy Extensions'
+        name = 'Groovier Junit'
         description = "${project.description}"
         url = "https://github.com/Alipsa/groovier-junit"
         properties = [

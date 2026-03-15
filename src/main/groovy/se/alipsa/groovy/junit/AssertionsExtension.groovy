@@ -105,10 +105,18 @@ class AssertionsExtension {
    * @see #assertEquals(Assertions, BigDecimal, BigDecimal, String)
    */
   static void assertEquals(Assertions self, Number expected, BigDecimal actual, BigDecimal delta, String message) {
+    String msg = message ?: "Expected ${expected} but was ${actual} within delta ${delta}"
+
     if (expected == null && actual == null) {
       return
     }
-    Assertions.assertTrue((expected - actual).abs() <= delta, "Expected $expected but was $actual within delta $delta\n" + message)
+
+    if (expected == null || actual == null) {
+      Assertions.fail(msg)
+    }
+
+    BigDecimal expectedValue = expected as BigDecimal
+    Assertions.assertTrue((expectedValue - actual).abs() <= delta, msg)
   }
 
   /**
