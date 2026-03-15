@@ -1,5 +1,6 @@
 package se.alipsa.groovy.junit
 
+import groovy.transform.CompileStatic
 import org.junit.platform.launcher.Launcher
 import org.junit.platform.launcher.LauncherDiscoveryListener
 import org.junit.platform.launcher.LauncherDiscoveryRequest
@@ -15,6 +16,7 @@ import org.junit.platform.launcher.TestPlan
  * <p>The interceptor is disabled by default and must be enabled explicitly with:
  * {@code -Dgroovier.junit.classloader.enabled=true}.</p>
  */
+@CompileStatic
 class GroovyClassLoaderLauncherInterceptor implements LauncherInterceptor {
 
   static final String ENABLE_PROPERTY = 'groovier.junit.classloader.enabled'

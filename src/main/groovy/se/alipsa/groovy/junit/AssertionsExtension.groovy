@@ -1,5 +1,6 @@
 package se.alipsa.groovy.junit
 
+import groovy.transform.CompileStatic
 import org.junit.jupiter.api.Assertions
 
 /**
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.Assertions
  * @author Per Nyfelt
  * @since 0.1.0
  */
+@CompileStatic
 class AssertionsExtension {
 
   /**
@@ -39,7 +41,7 @@ class AssertionsExtension {
   static void assertEquals(Assertions self, BigDecimal expected, BigDecimal actual, String message = null) {
     if (expected == null && actual == null) return
 
-    def msg = message ?: "Expected ${expected} but was ${actual}"
+    String msg = message ?: "Expected ${expected} but was ${actual}"
 
     if (expected == null || actual == null) {
       Assertions.fail(msg)
@@ -106,6 +108,64 @@ class AssertionsExtension {
     if (expected == null && actual == null) {
       return
     }
-    Assertions.assertTrue((expected - actual).abs() <= delta, message)
+    Assertions.assertTrue((expected - actual).abs() <= delta, "Expected $expected but was $actual within delta $delta\n" + message)
+  }
+
+  /**
+   * When compiling statically Junit is sometimes confused by Groovy's GString and String types.
+   * This method converts GStrings to Strings before comparing.
+   * @param self the {@link Assertions} class (implicit parameter for Groovy extension methods)
+   * @param expected the expected {@link String} value
+   * @param actual the actual {@link GString} value
+   */
+  static void assertEquals(Assertions self, String expected, GString actual) {
+    if (expected == null && actual == null) {
+      return
+    }
+    Assertions.assertEquals(expected, String.valueOf(actual))
+  }
+
+  /**
+   * When compiling statically Junit is sometimes confused by Groovy's GString and String types.
+   * This method converts GStrings to Strings before comparing.
+   * @param self the {@link Assertions} class (implicit parameter for Groovy extension methods)
+   * @param expected the expected {@link GString} value
+   * @param actual the actual {@link String} value
+   */
+  static void assertEquals(Assertions self, GString expected, String actual) {
+    if (expected == null && actual == null) {
+      return
+    }
+    Assertions.assertEquals(String.valueOf(expected), actual)
+  }
+
+  /**
+   * When compiling statically Junit is sometimes confused by Groovy's GString and String types.
+   * This method converts GStrings to Strings before comparing.
+   * @param self the {@link Assertions} class (implicit parameter for Groovy extension methods)
+   * @param expected the expected {@link String} value
+   * @param actual the actual {@link GString} value
+   * @param message optional custom failure message
+   */
+  static void assertEquals(Assertions self, String expected, GString actual, String message) {
+    if (expected == null && actual == null) {
+      return
+    }
+    Assertions.assertEquals(expected, String.valueOf(actual), message)
+  }
+
+  /**
+   * When compiling statically Junit is sometimes confused by Groovy's GString and String types.
+   * This method converts GStrings to Strings before comparing.
+   * @param self the {@link Assertions} class (implicit parameter for Groovy extension methods)
+   * @param expected the expected {@link GString} value
+   * @param actual the actual {@link String} value
+   * @param message optional custom failure message
+   */
+  static void assertEquals(Assertions self, GString expected, String actual, String message) {
+    if (expected == null && actual == null) {
+      return
+    }
+    Assertions.assertEquals(String.valueOf(expected), actual, message)
   }
 }
