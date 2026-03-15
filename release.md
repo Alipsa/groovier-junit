@@ -1,5 +1,8 @@
 # Release history
 
+## v0.3.1, 2026-03-15
+- Generalize the GString support in assertEquals to handle any combination of CharSequence (String and GString parameters), ensuring that all comparisons between these types are handled correctly regardless of their position in the assertion or message.
+
 ## v0.3.0, 2026-03-15
 - Add support for comparing GStrings in assertEquals. This allows for assertions that GStrings are equal to Strings, which is useful for cases where string interpolation is used and the resulting strings need to be compared.
 - Change to CompileStatic for assertEquals to improve performance and type safety. This ensures that the method is compiled with static type checking, which can catch potential issues at compile time and improve the overall performance of the assertions.

@@ -42,5 +42,7 @@ class AssertionsExtensionTest {
     GString b = "${a}"
     Assertions.assertEquals(a, b)
     Assertions.assertEquals(b, a)
+    Assertions.assertEquals(a, b, "String should equalG String")
+    Assertions.assertEquals(b, a, "GString should equal String")
   }
 }
