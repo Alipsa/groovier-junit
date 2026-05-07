@@ -53,6 +53,28 @@ class AssertionsExtension {
     }
   }
 
+  // Although i have not been able to create a test to replicate the issue
+  // in the "wild" i have seen cases when JUnit's assertEquals is called with a BigDecimal and some other Number type,
+  // and it fails because of the type mismatch under static compilation.
+  static void assertEquals(Assertions self, BigDecimal expected, Object actual, String message = null) {
+    if (actual instanceof Number) {
+      assertEquals(self, expected, actual as BigDecimal, message)
+    } else {
+      Assertions.assertEquals(expected, actual, message)
+    }
+  }
+
+  // Although i have not been able to create a test to replicate the issue
+  // in the "wild" i have seen cases when JUnit's assertEquals is called with a BigDecimal and some other Number type,
+  // and it fails because of the type mismatch under static compilation.
+  static void assertEquals(Assertions self, Object expected, BigDecimal actual, String message = null) {
+    if (expected instanceof Number) {
+      assertEquals(self, expected as BigDecimal, actual, message)
+    } else {
+      Assertions.assertEquals(expected, actual, message)
+    }
+  }
+
   /**
    * Asserts that a {@link Number} and a {@link BigDecimal} are numerically equal, ignoring scale differences.
    * <p>
