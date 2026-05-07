@@ -1,5 +1,8 @@
 # Release history
 
+## v0.3.2, 2026-05-07
+- Add overloads for assertEquals for (Object, BigDecimal) and (BigDecimal, Object) to ensure that comparisons between BigDecimal and any other type are handled gracefully, with appropriate type coercion and error handling to prevent unexpected exceptions during assertions.
+
 ## v0.3.1, 2026-03-15
 - Generalize the GString support in assertEquals to handle any combination of CharSequence (String and GString parameters), ensuring that all comparisons between these types are handled correctly regardless of their position in the assertion or message.
 
