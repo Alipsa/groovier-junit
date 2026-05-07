@@ -1,5 +1,9 @@
 # Release history
 
+## v0.3.3, in progress
+- update gradle version [9.3.1 -> 9.5.0]
+- update groovy [5.0.3 -> 5.0.6]
+
 ## v0.3.2, 2026-05-07
 - Add overloads for assertEquals for (Object, BigDecimal) and (BigDecimal, Object) to ensure that comparisons between BigDecimal and any other type are handled gracefully, with appropriate type coercion and error handling to prevent unexpected exceptions during assertions.
 

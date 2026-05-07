@@ -3,11 +3,11 @@ plugins {
   id('java-library')
   id('signing')
   id('maven-publish')
-  id("se.alipsa.nexus-release-plugin") version '2.0.1'
-  id("com.github.ben-manes.versions").version("0.53.0")
+  id("se.alipsa.nexus-release-plugin") version '2.2.0'
+  id("com.github.ben-manes.versions").version("0.54.0")
 }
 group = 'se.alipsa.groovy'
-version = '0.3.2' // remember to change Extension module info if changing version
+version = '0.3.3-SNAPSHOT' // remember to change Extension module info if changing version
 description = "Groovy extensions for Junit 5+"
 
 repositories {
@@ -28,7 +28,7 @@ compileGroovy {
 }
 
 dependencies {
-  def groovyVersion="5.0.4"
+  def groovyVersion="5.0.6"
   def junitVersion = '6.0.3'
   compileOnly "org.apache.groovy:groovy:$groovyVersion"
   compileOnly "org.apache.groovy:groovy-ant:$groovyVersion"
@@ -45,6 +45,13 @@ dependencies {
 
 test {
   useJUnitPlatform()
+}
+
+tasks.named("dependencyUpdates").configure {
+  rejectVersionIf {
+    def v = it.candidate.version.toLowerCase()
+    v.contains('alpha') || v.contains('beta') || v =~ /[.-](rc|cr|m)\d*$/
+  }
 }
 
 tasks.register('antGroovydoc', DefaultTask) {
